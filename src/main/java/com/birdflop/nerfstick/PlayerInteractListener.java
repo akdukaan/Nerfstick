@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
+import org.bukkit.block.ShulkerBox;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Powerable;
 import org.bukkit.block.data.Rail;
@@ -51,6 +52,10 @@ public class PlayerInteractListener implements Listener {
         if (blockData instanceof Leaves) return;
         if (blockData instanceof Lantern) return;
         if (blockData instanceof Fence) return;
+        if (blockData instanceof Wall) return;
+
+        BlockState blockState = clickedBlock.getState();
+        if (blockState instanceof ShulkerBox) return;
         cancelEvent(event, "on that block.");
 
     }
