@@ -53,6 +53,7 @@ public class PlayerInteractListener implements Listener {
         if (blockData instanceof Lantern) return;
         if (blockData instanceof Fence) return;
         if (blockData instanceof Wall) return;
+        if (blockData instanceof Stairs) return;
 
         BlockState blockState = clickedBlock.getState();
         if (blockState instanceof ShulkerBox) return;
