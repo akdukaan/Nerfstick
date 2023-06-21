@@ -1,0 +1,5 @@
+# Nerfstick
+Nerfs debug stick to make it more fair in survival. For example, Nerfstick prevents debug usage on doors and beds since you can duplicate the item like that. It also prevents usage on waterloggable blocks in the nether since you can add water in the nether like that. It also prevents usage on crops since you can grow crops super fast like that.
+
+## Contributing
+I'd like to make the plugin less strict. Instead of denying debug stick usage on any water-loggable block in the nether, I think it would be nice to only deny the action if it's going to waterlog the block. I don't really know if this is possible because I actually don't know too much about debug sticks, but if it's possible, it would be better if we could make it skip over any water-loggable blocks and skip to the next state. And like that, it would be better if we denied usage on slabs/doors/beds only in the cases where it would turn them into dupe-able states. And of course, there's also more blocks that could probably be added to the current whitelist of allowed blocks. 
