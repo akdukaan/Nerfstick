@@ -42,7 +42,6 @@ public class PlayerInteractListener implements Listener {
         if (blockData instanceof Ladder) return;
         if (blockData instanceof Powerable) return;
         if (blockData instanceof Chest) return;
-        if (blockData instanceof EndPortalFrame) return;
         if (blockData instanceof Furnace) return;
         if (blockData instanceof Sign) return;
         if (blockData instanceof HangingSign) return;
