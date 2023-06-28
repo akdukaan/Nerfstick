@@ -39,8 +39,19 @@ public class PlayerInteractListener implements Listener {
         // Only allow on some blocks
         if (clickedBlock.getType() == Material.REDSTONE_LAMP) return;
         if (blockData instanceof TrapDoor) return;
+        if (blockData instanceof Bell) return;
+        if (blockData instanceof Comparator) return;
+        if (blockData instanceof Gate) return;
+        if (blockData instanceof Lectern) return;
+        if (blockData instanceof LightningRod) return;
+        if (blockData instanceof NoteBlock) return;
+        if (blockData instanceof Observer) return;
+        if (blockData instanceof RedstoneRail) return;
+        if (blockData instanceof Repeater) return;
+        if (blockData instanceof Switch) return;
+        if (blockData instanceof Tripwire) return;
+        if (blockData instanceof TripwireHook) return;
         if (blockData instanceof Ladder) return;
-        if (blockData instanceof Powerable) return;
         if (blockData instanceof Chest) return;
         if (blockData instanceof Barrel) return;
         if (blockData instanceof Furnace) return;
