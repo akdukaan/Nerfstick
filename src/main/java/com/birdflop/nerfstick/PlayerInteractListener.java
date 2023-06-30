@@ -2,7 +2,6 @@ package com.birdflop.nerfstick;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -75,7 +74,7 @@ public class PlayerInteractListener implements Listener {
 
     public void cancelEvent(PlayerInteractEvent event, String reason) {
         Player player = event.getPlayer();
-        if (player.hasPermission("nerfstick.use.all")) return;
+        if (player.hasPermission("nerfstick.use." + event.getClickedBlock().getType())) return;
         event.setCancelled(true);
         player.sendMessage(ChatColor.RED + "You cannot use the debug stick " + reason);
     }
