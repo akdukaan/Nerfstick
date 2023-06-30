@@ -2,12 +2,12 @@ package com.birdflop.nerfstick;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.ShulkerBox;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.Powerable;
 import org.bukkit.block.data.Rail;
 import org.bukkit.block.data.Waterlogged;
 import org.bukkit.block.data.type.*;
@@ -37,7 +37,6 @@ public class PlayerInteractListener implements Listener {
         }
 
         // Only allow on some blocks
-        if (clickedBlock.getType() == Material.REDSTONE_LAMP) return;
         if (blockData instanceof TrapDoor) return;
         if (blockData instanceof Bell) return;
         if (blockData instanceof Comparator) return;
@@ -65,6 +64,8 @@ public class PlayerInteractListener implements Listener {
         if (blockData instanceof Fence) return;
         if (blockData instanceof Wall) return;
         if (blockData instanceof Stairs) return;
+        if (clickedBlock.getType() == Material.REDSTONE_LAMP) return;
+        if (clickedBlock.getType().toString().endsWith("_GLAZED_TERRACOTTA")) return;
 
         BlockState blockState = clickedBlock.getState();
         if (blockState instanceof ShulkerBox) return;
