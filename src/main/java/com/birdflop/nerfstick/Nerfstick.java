@@ -4,12 +4,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Nerfstick extends JavaPlugin {
 
-    public static Nerfstick nerfstick = null;
-
     @Override
     public void onEnable() {
-        nerfstick = this;
-        getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
+        // Plugin startup logic
+        getServer().getPluginManager().registerEvents(new NerfstickListener(), this);
     }
 
     @Override
