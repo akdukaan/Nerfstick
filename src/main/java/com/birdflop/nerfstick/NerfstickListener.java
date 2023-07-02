@@ -1,25 +1,18 @@
 package com.birdflop.nerfstick;
 
-import net.kyori.adventure.audience.MessageType;
-import net.kyori.adventure.chat.ChatType;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
-import net.md_5.bungee.api.ChatMessageType;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.Property;
-import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_20_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_20_R1.block.CraftBlock;
-import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_20_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,7 +22,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -85,7 +77,9 @@ public class NerfstickListener implements Listener {
         CompoundTag nbtTagCompound = nmsItemStack.getOrCreateTagElement("DebugProperty");
         String propertyName = nbtTagCompound.getString(blockId);
         Property<?> property = stateDefinition.getProperty(propertyName);
-        if (property == null)
+
+        // Check if the property is valid
+        if (property == null || propertyList.stream().noneMatch(p -> p.getName().equals(propertyName)))
             property = propertyList.get(0); // Get first property
 
         // Get the action

@@ -1,6 +1,5 @@
 package com.birdflop.nerfstick;
 
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 public final class Permission {
