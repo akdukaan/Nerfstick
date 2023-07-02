@@ -16,11 +16,10 @@ public final class Permission {
         return builder.toString();
     }
 
-    public static boolean canUseOnBlock(Player player, Block block) {
-        String blockId = block.getType().getKey().toString();
+    public static boolean allowBlockState(Player player, String blockId, String stateName) {
         String[] blockIdParts = blockId.split(":");
         String namespace = blockIdParts[0];
         String id = blockIdParts[1];
-        return player.hasPermission(makeGroup(BASE_GROUP, "use", namespace, id));
+        return player.hasPermission(makeGroup(BASE_GROUP, "use", namespace, id, stateName));
     }
 }

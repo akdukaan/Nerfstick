@@ -29,7 +29,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class NerfstickListener implements Listener {
     @EventHandler(ignoreCancelled = true)
@@ -58,28 +60,23 @@ public class NerfstickListener implements Listener {
         StateDefinition<net.minecraft.world.level.block.Block, BlockState> stateDefinition = nmsBlock.getStateDefinition();
         Collection<Property<?>> properties = stateDefinition.getProperties();
 
+        // Filter properties
+        List<Property<?>> propertyList = properties.stream().filter(property -> {
+            String propertyName = property.getName();
+            return Permission.allowBlockState(event.getPlayer(), blockId, propertyName);
+        }).toList();
+
         // Get the player
         Player player = event.getPlayer();
 
-        // Check if the player has permission to use the debug stick on this block
-        if (Permission.canUseOnBlock(player, block)) {
-            // Tell player about the error
-            player.sendActionBar(
-                    Component.empty()
-                            .append(Component.text("You do not have permission to use the debug stick on ", TextColor.color(0xFFAA00)))
-                            .append(Component.text(blockId, TextColor.color(0xFF5555)))
-            );
-            return;
-        }
-
         // Check if the block has any block state
-        if (properties.isEmpty()) {
+        if (propertyList.isEmpty()) {
             // Tell player about the error
             player.sendActionBar(
                     Component.empty()
                             .append(Component.text("Block ", TextColor.color(0xFFAA00)))
                             .append(Component.text(blockId, TextColor.color(0xFF5555)))
-                            .append(Component.text(" does not have any block state!", TextColor.color(0xFFAA00)))
+                            .append(Component.text(" does not have any modifiable block state!", TextColor.color(0xFFAA00)))
             );
             return;
         }
@@ -89,7 +86,7 @@ public class NerfstickListener implements Listener {
         String propertyName = nbtTagCompound.getString(blockId);
         Property<?> property = stateDefinition.getProperty(propertyName);
         if (property == null)
-            property = properties.iterator().next(); // Get first property
+            property = propertyList.get(0); // Get first property
 
         // Get the action
         Action action = event.getAction();
@@ -101,7 +98,7 @@ public class NerfstickListener implements Listener {
         boolean setState = action == Action.LEFT_CLICK_BLOCK;
 
         if (setState) {
-            property = getRelative(properties, property, inverse);
+            property = getRelative(propertyList, property, inverse);
 
             // Update property name
             nbtTagCompound.putString(blockId, property.getName());
