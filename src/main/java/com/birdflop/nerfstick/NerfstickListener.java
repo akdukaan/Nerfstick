@@ -61,6 +61,17 @@ public class NerfstickListener implements Listener {
         // Get the player
         Player player = event.getPlayer();
 
+        // Check if the player has permission to use the debug stick on this block
+        if (Permission.canUseOnBlock(player, block)) {
+            // Tell player about the error
+            player.sendActionBar(
+                    Component.empty()
+                            .append(Component.text("You do not have permission to use the debug stick on ", TextColor.color(0xFFAA00)))
+                            .append(Component.text(blockId, TextColor.color(0xFF5555)))
+            );
+            return;
+        }
+
         // Check if the block has any block state
         if (properties.isEmpty()) {
             // Tell player about the error
