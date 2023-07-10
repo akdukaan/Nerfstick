@@ -11,10 +11,6 @@ repositories {
     mavenCentral()
     mavenLocal()
     maven {
-        name = "spigotmc-repo"
-        url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
-    }
-    maven {
         name = "papermc"
         url = "https://papermc.io/repo/repository/maven-public/"
     }
@@ -22,11 +18,21 @@ repositories {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
+    maven {
+        name = "jitpack"
+        url = "https://jitpack.io"
+    }
+    maven {
+        name = "sk89q"
+        url = "https://maven.enginehub.org/repo/"
+    }
 }
 
 dependencies {
     paperweight.paperDevBundle project.paper_version
     compileOnly "io.papermc.paper:paper-api:$paper_version"
+    compileOnly "com.github.TechFortress:GriefPrevention:$griefprevention_version"
+    compileOnly "com.sk89q.worldguard:worldguard-bukkit:$worldguard_version"
 }
 
 def targetJavaVersion = 17

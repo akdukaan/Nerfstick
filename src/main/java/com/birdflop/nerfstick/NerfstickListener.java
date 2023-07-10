@@ -26,7 +26,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class NerfstickListener implements Listener {
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         // Check if the player is holding a debug stick
         ItemStack itemStack = event.getItem();
@@ -39,6 +39,18 @@ public class NerfstickListener implements Listener {
         Block block = event.getClickedBlock();
         if (block == null)
             return;
+
+        // Check if the modification is allowed
+        String denyReason = Permission.getBlockProtection(event.getPlayer(), block.getLocation(), block.getType());
+        if (denyReason != null && !denyReason.isEmpty()) {
+            // Tell player about the error
+            event.getPlayer().sendActionBar(
+                    Component.empty()
+                            .append(Component.text("Interaction denied! Reason: ", TextColor.color(0xFFAA00)))
+                            .append(Component.text(denyReason, TextColor.color(0xFF5555)))
+            );
+            return;
+        }
 
         // Get block id
         String blockId = block.getType().getKey().toString();
