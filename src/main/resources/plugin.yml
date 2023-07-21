@@ -1,5 +1,5 @@
 name: Nerfstick
-version: '${project.version}'
+version: '${version}'
 main: com.birdflop.nerfstick.Nerfstick
 api-version: "1.20"
 authors: [ DrBot ]
