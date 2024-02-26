@@ -24,19 +24,19 @@ Set these permissions to true. It's a whitelist of blocks that could be modified
 * nerfstick.use.minecraft.tripwire_hook.*
 * nerfstick.use.redstone_lamp.*
 * nerfstick.use.minecraft.ender_chest
-* r=nerfstick.use.minecraft.*_chest.*
-* r=nerfstick.use.minecraft.*_fence.*
-* r=nerfstick.use.minecraft.*_gate.*
-* r=nerfstick.use.minecraft.*_glazed_terracotta.*
-* r=nerfstick.use.minecraft.*_lantern.*
-* r=nerfstick.use.minecraft.*_leaves.*
-* r=nerfstick.use.minecraft.*_log.*
-* r=nerfstick.use.minecraft.*_rail.*
-* r=nerfstick.use.minecraft.*_repeater.*
-* r=nerfstick.use.minecraft.*_sign.*
-* r=nerfstick.use.minecraft.*_stairs.*
-* r=nerfstick.use.minecraft.*_trapdoor.*
-* r=nerfstick.use.minecraft.*_wall.*
+* r=nerfstick.use.minecraft.*_chest.\*
+* r=nerfstick.use.minecraft.*_fence.\*
+* r=nerfstick.use.minecraft.*_gate.\*
+* r=nerfstick.use.minecraft.*_glazed_terracotta.\*
+* r=nerfstick.use.minecraft.*_lantern.\*
+* r=nerfstick.use.minecraft.*_leaves.\*
+* r=nerfstick.use.minecraft.*_log.\*
+* r=nerfstick.use.minecraft.*_rail.\*
+* r=nerfstick.use.minecraft.*_repeater.\*
+* r=nerfstick.use.minecraft.*_sign.\*
+* r=nerfstick.use.minecraft.*_stairs.\*
+* r=nerfstick.use.minecraft.*_trapdoor.\*
+* r=nerfstick.use.minecraft.*_wall.\*
 
 
 This should also respect claims and other protections.
