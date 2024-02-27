@@ -4,7 +4,7 @@ Nerfs debug stick to make it more fair in survival. For example, Nerfstick can p
 ## Setup for Luckperms
 Here's what I use on my server and it's a good starting point. Luckperms works with regex and that's what the r= means in the permissions below but some permission plugins might not support this so if you're not using Luckperms, look into that some more.
 
-Set **minecraft.debugstick.always** to true to allow players to use the debug stick outside of creative mode. This permission comes from Paper so if you're not using paper, see if there's another perm or plugin to do the same.
+Set **minecraft.debugstick.always** to true to allow players to use the debug stick outside of creative mode. This permission comes from Spigot so if you're not using Spigot or a fork of it, see if there's another permissoion or plugin to do the same.
 
 Set **r=nerfstick.use.minecraft.\*.waterlogged** to **false** in context of dimension-type **the_nether**. This is to prevent waterlogging blocks in the nether.
 
