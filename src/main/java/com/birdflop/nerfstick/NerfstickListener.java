@@ -4,16 +4,22 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponentHolder;
+import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.component.DebugStickState;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.Property;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_20_R3.block.CraftBlock;
-import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.CraftWorld;
+import org.bukkit.craftbukkit.block.CraftBlock;
+import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -36,7 +42,7 @@ public class NerfstickListener implements Listener {
         event.setCancelled(true);
 
         // Get the block the player is looking at
-        Block block = event.getClickedBlock();
+        org.bukkit.block.Block block = event.getClickedBlock();
         if (block == null)
             return;
 
@@ -86,17 +92,10 @@ public class NerfstickListener implements Listener {
         }
 
         // Get the property
-        CompoundTag nbtTagCompound = nmsItemStack.getOrCreateTagElement("DebugProperty");
-        String propertyName = nbtTagCompound.getString(blockId);
-        Property<?> property = stateDefinition.getProperty(propertyName);
+        DebugStickState debugStickState = nmsItemStack.get(DataComponents.DEBUG_STICK_STATE);
+        Property<?> property = debugStickState.properties().getOrDefault(Holder.direct(nmsBlock), propertyList.getFirst());
 
-        // Check if the property is valid
-        if (property == null || propertyList.stream().noneMatch(p -> p.getName().equals(propertyName)))
-            property = propertyList.get(0); // Get first property
-
-        // Get the action
         Action action = event.getAction();
-
         if (action != Action.LEFT_CLICK_BLOCK && action != Action.RIGHT_CLICK_BLOCK)
             return;
 
@@ -104,16 +103,20 @@ public class NerfstickListener implements Listener {
         boolean setState = action == Action.LEFT_CLICK_BLOCK;
 
         if (setState) {
+            // Update property name
             property = getRelative(propertyList, property, inverse);
 
-            // Update property name
-            nbtTagCompound.putString(blockId, property.getName());
+//            debugStickState = debugStickState.withProperty(Holder.direct(nmsBlock), property);
+//            System.out.println("trying to set the component");
+//            nmsItemStack.set(DataComponents.DEBUG_STICK_STATE, debugStickState);
 
             // Get the bukkit copy
-            ItemStack bukkitItemStack = CraftItemStack.asBukkitCopy(nmsItemStack);
+//            System.out.println("trying to get bukkit copy");
+//            ItemStack bukkitItemStack = CraftItemStack.asBukkitCopy(nmsItemStack);
 
+//            System.out.println("Will try to set item in hand");
             // Update the item in the player's hand
-            player.getInventory().setItemInMainHand(bukkitItemStack);
+//            player.getInventory().setItemInMainHand(bukkitItemStack);
 
             // Tell player about new selected state
             player.sendActionBar(
@@ -123,6 +126,7 @@ public class NerfstickListener implements Listener {
                             .append(Component.text(" for ", TextColor.color(0xFFAA00)))
                             .append(Component.text(blockId, TextColor.color(0xFF5555)))
             );
+            event.setCancelled(false);
         } else {
             // Cycle the state
             blockState = cycleState(blockState, property, inverse);
