@@ -2,7 +2,7 @@ package com.birdflop.nerfstick;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.DebugStickState;
@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.properties.Property;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.CraftWorld;
-import org.bukkit.craftbukkit.block.CraftBlock;
+import org.bukkit.craftbukkit.block.data.CraftBlockData;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -60,7 +60,7 @@ public class NerfstickListener implements Listener {
 
         // Get NMS data
         CraftItemStack craftItemStack = (CraftItemStack) itemStack;
-        BlockState blockState = ((CraftBlock) block).getNMS();
+        BlockState blockState = ((CraftBlockData) block.getBlockData()).getState();
         net.minecraft.world.level.block.Block nmsBlock = blockState.getBlock();
         StateDefinition<net.minecraft.world.level.block.Block, BlockState> stateDefinition = nmsBlock.getStateDefinition();
 
@@ -87,7 +87,7 @@ public class NerfstickListener implements Listener {
         // Get the property
         DebugStickState debugStickState = craftItemStack.handle.get(DataComponents.DEBUG_STICK_STATE);
         if (debugStickState == null) return;
-        Property<?> property = debugStickState.properties().getOrDefault(blockState.getBlockHolder(), propertyList.getFirst());
+        Property<?> property = debugStickState.properties().getOrDefault(blockState.typeHolder(), propertyList.getFirst());
         String propertyName = property.getName();
         if (propertyList.stream().noneMatch(p -> p.getName().equals(propertyName))) {
             property = propertyList.getFirst();
@@ -98,11 +98,10 @@ public class NerfstickListener implements Listener {
             property = getRelative(propertyList, property, inverse);
 
             // Update property name
-            debugStickState = debugStickState.withProperty(blockState.getBlockHolder(), property);
-            craftItemStack.handle.set(DataComponents.DEBUG_STICK_STATE, debugStickState);
+            debugStickState = debugStickState.withProperty(blockState.typeHolder(), property);            craftItemStack.handle.set(DataComponents.DEBUG_STICK_STATE, debugStickState);
 
             // Get the bukkit copy
-            ItemStack bukkitItemStack = craftItemStack.handle.asBukkitCopy();
+            ItemStack bukkitItemStack = CraftItemStack.asBukkitCopy(craftItemStack.handle);
 
             // Update the item in the player's hand
             player.getInventory().setItemInMainHand(bukkitItemStack);
